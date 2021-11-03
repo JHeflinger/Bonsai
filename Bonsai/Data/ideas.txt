@@ -1,0 +1,2 @@
+ideas:
+get all assignments button that creates a ccv file with all the assignments you have or ever had or seomthing

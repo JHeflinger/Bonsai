@@ -1,16 +1,15 @@
-package main;
+package mainFrame;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
 import javax.swing.JComponent;
 
 public class Central extends JComponent implements ActionListener {
-
+	
 	public Central() {
-		
 	}
 	
 	private void paint(Graphics2D g) {
@@ -34,5 +33,5 @@ public class Central extends JComponent implements ActionListener {
 		update();
 		repaint();
 	}
-
+	
 }
