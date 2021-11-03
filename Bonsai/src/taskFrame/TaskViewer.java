@@ -10,7 +10,9 @@ import java.util.Scanner;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import mainFrame.Central;
 import mainFrame.Processor;
@@ -65,15 +67,13 @@ public class TaskViewer {
 			return;
 		}
 		String line = scanner.nextLine();
-		line = scanner.nextLine();
+		if(scanner.hasNextLine()) {
+			line = scanner.nextLine();
+		}
 		while (scanner.hasNextLine()) {
 			JButton tempButton = new JButton(Processor.getAssignmentNameFromLine(line));
-			tempButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
+			TaskButton taskButton = new TaskButton(line);
+			tempButton.addActionListener(taskButton);
 			buttonPanel.add(tempButton);
 			line = scanner.nextLine();
 		}
@@ -84,4 +84,6 @@ public class TaskViewer {
 		
 	}
 
+	
+	
 }
