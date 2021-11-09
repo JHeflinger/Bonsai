@@ -69,25 +69,22 @@ public class Viewer {
 		viewTasks.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				taskViewer = new TaskViewer(mainFrame.getLocation().x + FRAME_WIDTH + 50, 
-											mainFrame.getLocation().y);
+				taskViewer = new TaskViewer(mainFrame.getLocation().x + FRAME_WIDTH + 50, mainFrame.getLocation().y);
 				taskViewer.runViewer();
 			}
 		});
 		buttonPanel.add(viewTasks);
-		
+
 		// add "add assignments" button
 		JButton addAssignments = new JButton("ADD ASSIGNMENT");
 		addAssignments.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField name = new JTextField();
-				JTextField className = new JTextField(); //turn this into a dropdown menu
-				JTextField priority = new JTextField(); //turn this into a dropdown menu or a slider or something
-				Object[] options = { "Name of assignment:", name,
-						"Which class is this assignment for?", className,
-						"What priority is this? (the lower the more important)", priority,
-						};
+				JTextField className = new JTextField(); // turn this into a dropdown menu
+				JTextField priority = new JTextField(); // turn this into a dropdown menu or a slider or something
+				Object[] options = { "Name of assignment:", name, "Which class is this assignment for?", className,
+						"What priority is this? (the lower the more important)", priority, };
 				name.setText("My New Assignment");
 				className.setText("POO101");
 				priority.setText(Integer.toString(10));
@@ -95,20 +92,40 @@ public class Viewer {
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					try {
-						//generate ID and add on to it
-						String text = getNewIDNumber()
-									  + "," + name.getText() + "," 
-									  + className.getText() + "," 
-									  + priority.getText();
+						// generate ID and add on to it
+						String text = getNewIDNumber() + "," + name.getText() + "," + className.getText() + ","
+								+ priority.getText();
 						addWriteToAssignments(text);
 					} catch (Exception excep) {
-						JOptionPane.showMessageDialog(null,
-								"ERROR: INVALID INPUT");
+						JOptionPane.showMessageDialog(null, "ERROR: INVALID INPUT");
 					}
 				}
 			}
 		});
 		buttonPanel.add(addAssignments);
+
+		// add "reset" button
+		JButton reset = new JButton("RESET");
+		reset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int n = JOptionPane.showConfirmDialog(
+			            null,
+			            "WARNING!!! THIS WILL RESET ALL\n"
+			            + "WRITTEN DATA BEYOND RECOVERY!!\n"
+			            + "DO YOU WISH TO STILL CONTINUE?",
+			            "",
+			            JOptionPane.YES_NO_OPTION);
+				switch(n) {
+				case JOptionPane.YES_OPTION:
+			         overwriteToAssignments("ID,Assignment Name,Class Name,Priority");
+			         break;
+			         case JOptionPane.NO_OPTION:
+			         break;
+				}
+			}
+		});
+		buttonPanel.add(reset);
 
 		// add buttons to frame
 		mainFrame.add(buttonPanel);
@@ -126,31 +143,31 @@ public class Viewer {
 		pw.println(text);
 		pw.close();
 	}
-	
+
 	private void addWriteToAssignments(String text) {
 		PrintWriter pw = null;
 		try {
-			pw = new PrintWriter(new FileOutputStream(new File("Data/Assignments.txt"),true));
+			pw = new PrintWriter(new FileOutputStream(new File("Data/Assignments.txt"), true));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
-		pw.println();
 		pw.append(text);
+		pw.println();
 		pw.close();
 	}
-	
+
 	private int getNewIDNumber() {
-		int id = (int)((Math.random() * 8999999) + 1000000);
-		if(!checkIfIDExists(id)) {
+		int id = (int) ((Math.random() * 8999999) + 1000000);
+		if (!checkIfIDExists(id)) {
 			return id;
-		}else {
+		} else {
 			return getNewIDNumber();
 		}
 	}
-	
-	//test if this works eventually lol
+
+	// test if this works eventually lol
 	private boolean checkIfIDExists(int id) {
 		Scanner scanner;
 		try {
@@ -160,15 +177,15 @@ public class Viewer {
 			return false;
 		}
 		String line = scanner.nextLine();
-		if(scanner.hasNextLine()) {
+		if (scanner.hasNextLine()) {
 			line = scanner.nextLine();
 		}
 		while (scanner.hasNextLine()) {
 			try {
-				if(Integer.parseInt(line.substring(0,line.indexOf(","))) == id) {
+				if (Integer.parseInt(line.substring(0, line.indexOf(","))) == id) {
 					return true;
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				return false;
 			}
 			line = scanner.nextLine();
@@ -176,5 +193,5 @@ public class Viewer {
 		scanner.close();
 		return false;
 	}
-	
+
 }
