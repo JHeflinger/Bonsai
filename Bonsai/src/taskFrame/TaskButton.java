@@ -11,9 +11,11 @@ import mainFrame.Processor;
 public class TaskButton implements ActionListener {
 
 	private String line;
+	private TaskViewer taskViewer;
 	
-	public TaskButton(String line) {
+	public TaskButton(String line, TaskViewer taskViewer) {
 		this.line = line;
+		this.taskViewer = taskViewer;
 	}
 	
 	@Override
@@ -39,6 +41,7 @@ public class TaskButton implements ActionListener {
 							  + className.getText() + "," 
 							  + priority.getText();
 				Processor.replaceTask(Processor.getIDFromLine(line), text);
+				taskViewer.resetViewer();
 			} catch (Exception excep) {
 				JOptionPane.showMessageDialog(null,
 						"ERROR: INVALID INPUT");
