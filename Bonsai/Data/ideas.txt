@@ -4,3 +4,4 @@ get all assignments button that creates a ccv file with all the assignments you 
 to do:
 -scroll bar implementation
 -sort tasks by class, priority, etc
+-add deadlines maybe!!

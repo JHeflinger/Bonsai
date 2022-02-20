@@ -1,6 +1,5 @@
 package taskFrame;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -93,7 +91,7 @@ public class TaskViewer {
 		JLabel dropdownLabel = new JLabel("Filter by: ");
 		dropdownPanelOrder.add(dropdownLabel);
 		filterPanel.add(dropdownPanelOrder);
-		String[] sortOptions = { "Order Added", "Alphabetical Order", "Priority" }; // also add osrting by classes later
+		String[] sortOptions = { "Order Added", "Alphabetical Order", "Priority (low to high)", "Priority (high to low)" }; // also add osrting by classes later
 		JComboBox<String> addOrderSelector = new JComboBox<String>(sortOptions);
 		addOrderSelector.setMaximumSize(addOrderSelector.getPreferredSize());
 		addOrderSelector.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -101,12 +99,10 @@ public class TaskViewer {
 		dropdownPanelOrder.setMaximumSize(dropdownPanelOrder.getPreferredSize());
 
 		// add "regroup" button addNumberSelector.getSelectedItem());
-		JButton regroup = new JButton("SORT");
+		JButton regroup = new JButton("REFRESH");
 		regroup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// reSortButtons((String)(addOrderSelector.getSelectedItem()),
-				// (String)(addGroupSelector.getSelectedItem()));
 				resetViewer();
 			}
 		});

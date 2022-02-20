@@ -1,1 +1,5 @@
 ID,Assignment Name,Class Name,Priority
+2258051,SortingRaces,CSSE230,4
+3431530,Arrays HW,CSSE230,2
+3291817,Doublets HW,POO101,6
+1370473,My New Assignment,POO101,10
