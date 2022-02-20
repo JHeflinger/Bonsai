@@ -73,4 +73,58 @@ public class Processor {
 		
 	}
 
+	/**
+	 * ensures: moves or deletes a task
+	 * @param ID is the task that is being deleted or moved
+	 * @param delete is true if task is being deleted, false if is being moved to Completed.txt
+	 */
+	public static void completeTask(String ID, boolean delete) {
+		//get all lines
+		Scanner scanner;
+		ArrayList<String> lines = new ArrayList<String>();
+		try {
+			scanner = new Scanner(new File("Data/Assignments.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+		String line = scanner.nextLine();
+		if (scanner.hasNextLine()) {
+			line = scanner.nextLine();
+		}
+		while (scanner.hasNextLine()) {
+			lines.add(line);
+			line = scanner.nextLine();
+		}
+		lines.add(line);
+		scanner.close();
+		
+		//write all lines except for the ID
+		PrintWriter pw = null;
+		PrintWriter pwCompleted = null;
+		try {
+			pw = new PrintWriter("Data/Assignments.txt");
+			pwCompleted = new PrintWriter(new FileOutputStream(new File("Data/Completed.txt"), true));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		pw.println("ID,Assignment Name,Class Name,Priority");
+		for(int i = 0; i < lines.size(); i++) {
+			if(!lines.get(i).substring(0, 7).equals(ID)) {
+				pw.println(lines.get(i));
+			}else {
+				System.out.println(lines.get(i));
+				if(!delete) {
+					System.out.println(lines.get(i));
+					pwCompleted.append(lines.get(i));
+					pwCompleted.println();
+				}
+			}
+		}
+		pw.close();
+		pwCompleted.close();
+	}
+	
 }

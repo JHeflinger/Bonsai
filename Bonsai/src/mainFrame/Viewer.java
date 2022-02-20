@@ -75,35 +75,6 @@ public class Viewer {
 		});
 		buttonPanel.add(viewTasks);
 
-		// add "add assignments" button
-		JButton addAssignments = new JButton("ADD ASSIGNMENT");
-		addAssignments.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JTextField name = new JTextField();
-				JTextField className = new JTextField(); // turn this into a dropdown menu
-				JTextField priority = new JTextField(); // turn this into a dropdown menu or a slider or something
-				Object[] options = { "Name of assignment:", name, "Which class is this assignment for?", className,
-						"What priority is this? (the lower the more important)", priority, };
-				name.setText("My New Assignment");
-				className.setText("POO101");
-				priority.setText(Integer.toString(10));
-				int option = JOptionPane.showConfirmDialog(null, options, "Enter your new assignment!",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (option == JOptionPane.OK_OPTION) {
-					try {
-						// generate ID and add on to it
-						String text = getNewIDNumber() + "," + name.getText() + "," + className.getText() + ","
-								+ priority.getText();
-						addWriteToAssignments(text);
-					} catch (Exception excep) {
-						JOptionPane.showMessageDialog(null, "ERROR: INVALID INPUT");
-					}
-				}
-			}
-		});
-		buttonPanel.add(addAssignments);
-
 		// add "reset" button
 		JButton reset = new JButton("RESET");
 		reset.addActionListener(new ActionListener() {
@@ -142,56 +113,6 @@ public class Viewer {
 		}
 		pw.println(text);
 		pw.close();
-	}
-
-	private void addWriteToAssignments(String text) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(new FileOutputStream(new File("Data/Assignments.txt"), true));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-		pw.append(text);
-		pw.println();
-		pw.close();
-	}
-
-	private int getNewIDNumber() {
-		int id = (int) ((Math.random() * 8999999) + 1000000);
-		if (!checkIfIDExists(id)) {
-			return id;
-		} else {
-			return getNewIDNumber();
-		}
-	}
-
-	// test if this works eventually lol
-	private boolean checkIfIDExists(int id) {
-		Scanner scanner;
-		try {
-			scanner = new Scanner(new File("Data/Assignments.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		}
-		String line = scanner.nextLine();
-		if (scanner.hasNextLine()) {
-			line = scanner.nextLine();
-		}
-		while (scanner.hasNextLine()) {
-			try {
-				if (Integer.parseInt(line.substring(0, line.indexOf(","))) == id) {
-					return true;
-				}
-			} catch (Exception e) {
-				return false;
-			}
-			line = scanner.nextLine();
-		}
-		scanner.close();
-		return false;
 	}
 
 }
